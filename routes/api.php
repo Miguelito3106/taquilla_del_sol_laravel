@@ -84,7 +84,7 @@ Route::post("registrarEmpresa", [EmpresasController::class, "store"]);
 Route::get("empresa/{id}", [EmpresasController::class, "show"]);
 Route::put("actualizarEmpresa/{id}", [EmpresasController::class, "update"]);
 Route::delete("eliminarEmpresa/{id}", [EmpresasController::class, "destroy"]);
-Route::put("cambiarClave/{id}", [EmpresasController::class, "cambiarClave"]);
+Route::put("cambiarClave/{id}", [EmpresasController::class, "cambioClave"]);
 
 //Categorias
 Route::get("listarCategorias", [CategoriasController::class, "index"]);
