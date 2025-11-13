@@ -242,4 +242,49 @@ class EmpresasController extends Controller
             "message" => "Cambio de clave exitoso"
         ], 200);
     }
+     public function cambiarCorreoEmpresa(Request $request, string $id)
+    {
+        $empresa = Empresas::find($id);
+        if (!$empresa) {
+            return response()->json(["menssge" => "Cliente no encontrado"]);
+        }
+
+        $validator = Validator::make($request->all(), [
+            "correo" => "string|email"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "success" => false,
+                "message" => $validator->errors()
+            ], 400);
+        }
+
+        $correoExistenteCliente = clientes::where("correo", $request->correo)->exists();
+        $correoExistenteAdmin = Administradores::where("correo", $request->correo)->exists();
+        $correoExistenteEmpresa = Empresas::where("correo", $request->correo)->exists();
+
+        if ($correoExistenteAdmin || $correoExistenteEmpresa || $correoExistenteCliente) {
+            return response()->json([
+                "success" => false,
+                "message" => "El correo $request->correo ya se encuentra registrado"
+            ]);
+        }
+
+
+
+
+
+
+        $empresa->update($validator->validated());
+        $user = $request->user();
+        if ($user && $user->currentAccessToken()) {
+            $user->currentAccessToken()->delete();
+        }
+        return response()->json([
+            "success" => true,
+            "message" => "Cambio del correo exitoso. Inicia sesion nuevamente."
+
+        ], 200);
+    }
 }

@@ -45,6 +45,7 @@ Route::middleware(["auth:sanctum"])->group(function () {
         Route::put("actualizarCliente/{id}", [ClientesController::class, "updateCliente"]);
         Route::put("cambiar/clave/cliente/{id}", [ClientesController::class, "cambiarClave"]);
         Route::put("cambiar/correo/cliente/{id}", [ClientesController::class, "cambiarCorreo"]);
+
     });
 });
 
@@ -85,6 +86,7 @@ Route::get("empresa/{id}", [EmpresasController::class, "show"]);
 Route::put("actualizarEmpresa/{id}", [EmpresasController::class, "update"]);
 Route::delete("eliminarEmpresa/{id}", [EmpresasController::class, "destroy"]);
 Route::put("cambiarClave/{id}", [EmpresasController::class, "cambioClave"]);
+Route::put("cambiar/correo/empresa/{id}", [EmpresasController::class, "cambiarCorreoEmpresa"]);
 
 //Categorias
 Route::get("listarCategorias", [CategoriasController::class, "index"]);
