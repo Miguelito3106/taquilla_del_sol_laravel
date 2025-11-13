@@ -33,6 +33,26 @@ class EventosController extends Controller
         ], 200);
     }
 
+
+    //listar datos de un solo evento id
+    public function evento(string $id)
+    {
+        $evento = Eventos::with('categoria', 'empresa')->find($id);
+
+        if (!$evento) {
+            return response()->json([
+                "success" => false,
+                "message" => "Evento no encontrado"
+            ], 404);
+        }
+
+        return response()->json([
+            "success" => true,
+            "evento" =>  $evento
+        ], 200);
+
+    }
+
     public function cambioDeEstadoDelEvento(Request $request, $id)
     {
         DB::beginTransaction();
